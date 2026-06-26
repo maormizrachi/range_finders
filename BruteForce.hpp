@@ -7,7 +7,6 @@ template <typename PointT>
 class BruteForceFinder : public RangeFinder<PointT>
 {
     using coord_type = typename PointT::coord_type;
-    using typename RangeFinder<PointT>::template _set;
 
 public:
     template<typename RandomAccessIterator>

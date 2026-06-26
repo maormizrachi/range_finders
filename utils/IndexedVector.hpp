@@ -22,10 +22,10 @@ struct IndexedVector
     inline IndexedVector(coord_type x, coord_type y, coord_type z): IndexedVector(x, y, z, 0){}
     inline explicit IndexedVector(): IndexedVector(0, 0, 0){}
     inline IndexedVector(const PointT &other): IndexedVector(other.x, other.y, other.z){}
-    inline IndexedVector(const IndexedVector &other): IndexedVector(&other.values[0], other.index){}
+    IndexedVector(const IndexedVector &other) = default;
     inline IndexedVector(const PointT &point, size_t index): IndexedVector(point.x, point.y, point.z, index){}
 
-    inline IndexedVector &operator=(const IndexedVector &other){this->values[0] = other.values[0]; this->values[1] = other.values[1]; this->values[2] = other.values[2]; this->index = other.index; return *this;}
+    IndexedVector &operator=(const IndexedVector &other) = default;
 
     inline bool operator==(const IndexedVector &other) const
     {

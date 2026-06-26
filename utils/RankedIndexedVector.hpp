@@ -23,18 +23,10 @@ struct RankedIndexedVector
     inline RankedIndexedVector(coord_type x, coord_type y, coord_type z, size_t index, int rank): index(index), rank(rank){this->values[0] = x; this->values[1] = y; this->values[2] = z;}
     inline RankedIndexedVector(coord_type x = 0, coord_type y = 0, coord_type z = 0): RankedIndexedVector(x, y, z, ILLEGAL_INDEX, ILLEGAL_RANK){}
     inline RankedIndexedVector(const PointT &other): RankedIndexedVector(other.x, other.y, other.z){}
-    inline RankedIndexedVector(const RankedIndexedVector &other): RankedIndexedVector(other.values[0], other.values[1], other.values[2], other.index, other.rank){}
+    RankedIndexedVector(const RankedIndexedVector &other) = default;
     inline RankedIndexedVector(const PointT &point, size_t index, int rank): RankedIndexedVector(point.x, point.y, point.z, index, rank){}
 
-    inline RankedIndexedVector &operator=(const RankedIndexedVector &other)
-    {
-        this->values[0] = other.values[0];
-        this->values[1] = other.values[1];
-        this->values[2] = other.values[2];
-        this->index = other.index;
-        this->rank = other.rank;
-        return *this;
-    }
+    RankedIndexedVector &operator=(const RankedIndexedVector &other) = default;
 
     inline bool operator==(const RankedIndexedVector &other) const
     {

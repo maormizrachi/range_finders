@@ -16,8 +16,3 @@ target_include_directories(range_finders INTERFACE
 if(TARGET spatial_ds)
     target_link_libraries(range_finders INTERFACE spatial_ds)
 endif()
-
-# MPI serialization support is optional
-if(TARGET MPI::MPI_CXX)
-    target_link_libraries(range_finders INTERFACE MPI::MPI_CXX)
-endif()

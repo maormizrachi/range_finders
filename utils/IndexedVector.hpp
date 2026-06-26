@@ -6,17 +6,10 @@
 #include <limits>
 #include <string>
 
-#ifdef RICH_MPI
-    #include <mpi_utils/serialize/Serializer.hpp>
-#endif // RICH_MPI
-
 #define ILLEGAL_IDX std::numeric_limits<size_t>::max()
 
 template <typename PointT>
 struct IndexedVector
-#ifdef RICH_MPI
-    : public Serializable
-#endif // RICH_MPI
 {
     using coord_type = typename PointT::coord_type;
     using Raw_type = PointT;
@@ -81,28 +74,6 @@ struct IndexedVector
 
     inline size_t getIndex() const{return this->index;}
     inline PointT getVector() const{return PointT(values[0], values[1], values[2]);}
-
-#ifdef RICH_MPI
-    force_inline size_t dump(Serializer *serializer) const override
-    {
-        size_t bytes = 0;
-        bytes += serializer->insert(this->values[0]);
-        bytes += serializer->insert(this->values[1]);
-        bytes += serializer->insert(this->values[2]);
-        bytes += serializer->insert(this->index);
-        return bytes;
-    }
-
-    force_inline size_t load(const Serializer *serializer, size_t byteOffset) override
-    {
-        size_t bytesRead = 0;
-        bytesRead += serializer->extract(this->values[0], byteOffset);
-        bytesRead += serializer->extract(this->values[1], byteOffset + bytesRead);
-        bytesRead += serializer->extract(this->values[2], byteOffset + bytesRead);
-        bytesRead += serializer->extract(this->index, byteOffset + bytesRead);
-        return bytesRead;
-    }
-#endif // RICH_MPI
 };
 
 #endif // RANGE_FINDERS_INDEXED_VECTOR_HPP
